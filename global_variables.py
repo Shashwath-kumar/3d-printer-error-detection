@@ -14,3 +14,10 @@ TEST_CSV_PATH = os.path.join(DATA_DIR, 'test.csv')
 
 CHECKPOINT_DIR = 'model_checkpoints/'
 LDC_CHECKPOINT_PATH = os.path.join(CHECKPOINT_DIR, '16_model.pth')
+
+# Edge detection dir
+
+LDC_OUTPUT_DIR = 'LDC/'
+LDC_IMAGE_FOLDER = 'Images/'
+LDC_TRAIN_FOLDER = 'train/'
+LDC_TEST_FOLDER = 'test/'
