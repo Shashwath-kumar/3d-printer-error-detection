@@ -20,6 +20,7 @@ class ImageDataset(Dataset):
     def __getitem__(self, idx):
         img_path = os.path.join(self.img_dir, self.img_labels.iloc[idx, 0])
         file_name = self.img_labels.iloc[idx, 0].split('/')[-1]
+        img_dir = '/'.join(self.img_labels.iloc[idx, 0].split('/')[:-1])
         image = Image.open(img_path)
         image = image.resize((IMG_WIDTH, IMG_HEIGHT))
         image = torch.tensor(np.array(image), dtype=torch.float32).transpose(1,2).transpose(0,1)
@@ -28,4 +29,4 @@ class ImageDataset(Dataset):
             image = self.transform(image)
         if self.target_transform:
             label = self.target_transform(label)
-        return image, label, file_name
+        return image, label, file_name, img_dir

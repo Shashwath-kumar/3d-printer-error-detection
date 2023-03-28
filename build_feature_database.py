@@ -31,12 +31,10 @@ def image_normalization(img, img_min=0, img_max=255,
         ((np.max(img) - np.min(img)) + epsilon) + img_min
     return img
 
-def save_image_batch_to_disk(tensor, file_names, train , img_shape=[torch.tensor([IMG_HEIGHT]), torch.tensor([IMG_WIDTH])]):
+def save_image_batch_to_disk(tensor, file_names, img_dirs, img_shape=[torch.tensor([IMG_HEIGHT]), torch.tensor([IMG_WIDTH])]):
 
-    if train:
-        output_dir_f = os.path.join(LDC_OUTPUT_DIR, LDC_IMAGE_FOLDER, LDC_TRAIN_FOLDER)
-    else:
-        output_dir_f = os.path.join(LDC_OUTPUT_DIR, LDC_IMAGE_FOLDER, LDC_TEST_FOLDER)
+    
+    output_dir_f = os.path.join(LDC_OUTPUT_DIR, LDC_IMAGE_FOLDER)
     os.makedirs(output_dir_f, exist_ok=True)
 
     # 255.0 * (1.0 - em_a)
@@ -54,7 +52,7 @@ def save_image_batch_to_disk(tensor, file_names, train , img_shape=[torch.tensor
     assert len(image_shape) == len(file_names)
 
     idx = 0
-    for i_shape, file_name in zip(image_shape, file_names):
+    for i_shape, file_name, img_dir in zip(image_shape, file_names, img_dirs):
         tmp = tensor[:, idx, ...]
         tmp = np.squeeze(tmp)
 
@@ -76,7 +74,11 @@ def save_image_batch_to_disk(tensor, file_names, train , img_shape=[torch.tensor
                 fuse = tmp_img
                 fuse = fuse.astype(np.uint8)
 
-        output_file_name_f = os.path.join(output_dir_f, file_name)
+        output_file_dir = output_dir_f
+        for dir in img_dir.split('/'):
+            output_file_dir = os.path.join(output_file_dir, dir)
+            os.makedirs(output_file_dir, exist_ok=True)
+        output_file_name_f = os.path.join(output_file_dir, file_name)
         cv2.imwrite(output_file_name_f, fuse)
         idx += 1
 
@@ -87,8 +89,9 @@ def create_LDC_images(dataloader, model, device, train= True):
         for batch_id, sample_batched in enumerate(dataloader):
             images = sample_batched[0].to(device)
             file_names = sample_batched[2]
+            img_dirs = sample_batched[3]
             preds = model(images)
-            save_image_batch_to_disk(preds, file_names, train)
+            save_image_batch_to_disk(preds, file_names, img_dirs)
 
 
 def main():
@@ -108,7 +111,7 @@ def main():
 
     data_loader = DataLoader(train_dataset, batch_size=1, shuffle=False, num_workers=2)
 
-    create_LDC_images(data_loader, LDC_model, device, False)
+    create_LDC_images(data_loader, LDC_model, device)
 
 
 if __name__=='__main__':    
