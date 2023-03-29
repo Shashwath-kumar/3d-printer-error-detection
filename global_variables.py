@@ -21,3 +21,8 @@ LDC_OUTPUT_DIR = 'LDC/'
 LDC_IMAGE_FOLDER = 'Images/'
 LDC_TRAIN_FOLDER = 'train/'
 LDC_TEST_FOLDER = 'test/'
+
+
+# model
+
+MODEL_SAVE_PATH = 'model.pth'
