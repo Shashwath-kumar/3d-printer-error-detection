@@ -3,6 +3,7 @@
 ## Architecture plan:
 
 Edge detection feature extraction using LDC:
+```
 @ARTICLE{xsoria2022ldc,
   author={Soria, Xavier and Pomboza-Junez, Gonzalo and Sappa, Angel Domingo},
   journal={IEEE Access}, 
@@ -12,5 +13,5 @@ Edge detection feature extraction using LDC:
   number={},
   pages={68281-68290},
   doi={10.1109/ACCESS.2022.3186344}}
-
+```
 Fine-tuned various pretrained models on the dataset, resnet50 worked best. 
