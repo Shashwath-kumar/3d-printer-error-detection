@@ -2,19 +2,15 @@
 
 ## Architecture plan:
 
-Feature extractions ideas:
-    - edge detection methods 
-    - semantic segmentation methods (maybe?)
+Edge detection feature extraction using LDC:
+@ARTICLE{xsoria2022ldc,
+  author={Soria, Xavier and Pomboza-Junez, Gonzalo and Sappa, Angel Domingo},
+  journal={IEEE Access}, 
+  title={LDC: Lightweight Dense CNN for Edge Detection}, 
+  year={2022},
+  volume={10},
+  number={},
+  pages={68281-68290},
+  doi={10.1109/ACCESS.2022.3186344}}
 
-Train different models for each feature extraction and create an Ensemble
-
-Done:
-
-- Making edge detection dataset
-- Making model for classification
-
-Todo:
-
-- Create and run model1 on initial dataset
-- Create and run model2 on edge outlined dataset
-- Create an ensemble of the two models.
+Fine-tuned various pretrained models on the dataset, resnet50 worked best. 
