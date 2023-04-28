@@ -1,5 +1,7 @@
 # 3D printer error detection
 
+For the competition https://www.kaggle.com/competitions/early-detection-of-3d-printing-issues/overview
+
 ## Architecture plan:
 
 Edge detection feature extraction using LDC:
